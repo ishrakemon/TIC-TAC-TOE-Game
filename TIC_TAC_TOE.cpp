@@ -3,6 +3,7 @@
 
 // Function Prototypes
 void DrawBoard(char *spaces);
+void PlayerMove(char *spaces, char player);
 
 int main(){
     // Initialize board with empty spaces
@@ -12,6 +13,10 @@ int main(){
     bool running=true; // Game running state
 
     DrawBoard(spaces); // Function call to draw initial empty board
+    while(running){
+        PlayerMove(spaces, player);
+    }
+
     return 0;
 }
 
@@ -28,4 +33,16 @@ void DrawBoard(char *spaces){
     std::cout<<"  "<<spaces[6]<<"  |  "<<spaces[7]<<"  |  "<<spaces[8]<<"  "<<'\n';
     std::cout<<"     |     |     "<<'\n';
     std::cout<<'\n';
+}
+void PlayerMove(char *spaces, char player){
+    int number;
+    do{
+        std::cout<<"Enter a spot to place a marker (1-9)";
+        std::cin>>number;
+        number--;
+        if(spaces[number]==' '){
+            spaces[number]=player;
+            break;
+        }
+    }while(!number >0 || !number<8);
 }
