@@ -15,6 +15,8 @@ int main(){
     char computer='O'; // Computer Symbol
     bool running=true; // Game running state
 
+    srand(time(NULL)); // Move random seed initialization to main
+
     DrawBoard(spaces); // Function call to draw initial empty board
     while(running){
         PlayerMove(spaces, player); // Function call for player makes a move
@@ -39,7 +41,7 @@ int main(){
             break;
         }
     }
-    std::cout<<"\nThis Game is created by Ishrakuzzaman Emon\n"
+    std::cout<<"\nThis Game is created by Ishrakuzzaman Emon\n";
 
     return 0;
 }
@@ -63,21 +65,23 @@ void DrawBoard(char *spaces){
 void PlayerMove(char *spaces, char player){
     int number;
     do{
-        std::cout<<"Enter a spot to place a marker (1-9)";
+        std::cout<<"Enter a spot to place a marker (1-9): ";
         std::cin>>number;
         number--;
         // Checking if the chosen spot is empty
-        if(spaces[number]==' '){
+        if(number >= 0 && number < 9 && spaces[number]==' '){
             spaces[number]=player; // Players move
             break;
         }
-    }while(!number >0 || !number<8); // Ensure valid input range
+        else {
+            std::cout<<"Invalid move! Please choose an empty spot between 1-9.\n";
+        }
+    }while(true);
 }
 
 // Function to handle computer move
 void ComputerMove(char *spaces, char computer){
     int number;
-    srand(time(NULL));
     while(true){
         number=rand()%9; // Generate a random number between 0-8
         if(spaces[number]==' '){
@@ -89,17 +93,17 @@ void ComputerMove(char *spaces, char computer){
 
 // Function to check winner
 bool CheckWinner(char *spaces, char player, char computer){
-    // Check for Row
+    // Check for Rows
     if(spaces[0]!=' ' && (spaces[0] == spaces[1] && spaces[1] == spaces[2])){
         spaces[0]==player? std::cout<<"YOU WIN!\n" : std::cout<<"YOU LOSE!\n";
-    } else if(spaces[3]!=' ' && (spaces[3] == spaces[4] && spaces[5] == spaces[6])){
+    } else if(spaces[3]!=' ' && (spaces[3] == spaces[4] && spaces[4] == spaces[5])){
         spaces[3]==player? std::cout<<"YOU WIN!\n" : std::cout<<"YOU LOSE!\n";
     } else if(spaces[6]!=' ' && (spaces[6] == spaces[7] && spaces[7] == spaces[8])){
         spaces[6]==player? std::cout<<"YOU WIN!\n" : std::cout<<"YOU LOSE!\n";
     }
 
     // Check for Columns
-    else if(spaces[0]!=' ' && (spaces[0] == spaces[3] && spaces[3] == spaces[6])){
+    else if(spaces[0]!=' ' && (spaces[0] == spaces[3] && spaces[3] == spaces[6])){ 
         spaces[0]==player? std::cout<<"YOU WIN!\n" : std::cout<<"YOU LOSE!\n";
     } else if(spaces[1]!=' ' && (spaces[1] == spaces[4] && spaces[4] == spaces[7])){
         spaces[1]==player? std::cout<<"YOU WIN!\n" : std::cout<<"YOU LOSE!\n";
