@@ -4,6 +4,7 @@
 // Function Prototypes
 void DrawBoard(char *spaces);
 void PlayerMove(char *spaces, char player);
+void ComputerMove(char *spaces, char computer);
 
 int main(){
     // Initialize board with empty spaces
@@ -14,7 +15,11 @@ int main(){
 
     DrawBoard(spaces); // Function call to draw initial empty board
     while(running){
-        PlayerMove(spaces, player);
+        PlayerMove(spaces, player); // Function call for player makes a move
+        DrawBoard(spaces); // Redraw board after player makes a move
+
+        ComputerMove(spaces, computer); // Function to call computer move
+        DrawBoard(spaces); // Redraw board after computer makes a move
     }
 
     return 0;
@@ -34,15 +39,31 @@ void DrawBoard(char *spaces){
     std::cout<<"     |     |     "<<'\n';
     std::cout<<'\n';
 }
+
+// Function to handle player move
 void PlayerMove(char *spaces, char player){
     int number;
     do{
         std::cout<<"Enter a spot to place a marker (1-9)";
         std::cin>>number;
         number--;
+        // Checking if the chosen spot is empty
         if(spaces[number]==' '){
-            spaces[number]=player;
+            spaces[number]=player; // Players move
             break;
         }
-    }while(!number >0 || !number<8);
+    }while(!number >0 || !number<8); // Ensure valid input range
+}
+
+// Function to handle computer move
+void ComputerMove(char *spaces, char computer){
+    int number;
+    srand(time(null));
+    while(true){
+        number=rand()%9;
+        if(spaces[number]==' '){
+            spaces[number]=computer;
+            break;
+        }
+    }
 }
