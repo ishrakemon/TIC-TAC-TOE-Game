@@ -5,6 +5,7 @@
 void DrawBoard(char *spaces);
 void PlayerMove(char *spaces, char player);
 void ComputerMove(char *spaces, char computer);
+bool CheckWinner(char *spaces, char player, char computer);
 
 int main(){
     // Initialize board with empty spaces
@@ -17,9 +18,17 @@ int main(){
     while(running){
         PlayerMove(spaces, player); // Function call for player makes a move
         DrawBoard(spaces); // Redraw board after player makes a move
+        if(CheckWinner(spaces, player, computer)){
+            running=false;
+            break;
+        }
 
         ComputerMove(spaces, computer); // Function to call computer move
         DrawBoard(spaces); // Redraw board after computer makes a move
+        if(CheckWinner(spaces, player, computer)){
+            running=false;
+            break;
+        }
     }
 
     return 0;
@@ -58,12 +67,17 @@ void PlayerMove(char *spaces, char player){
 // Function to handle computer move
 void ComputerMove(char *spaces, char computer){
     int number;
-    srand(time(null));
+    srand(time(NULL));
     while(true){
-        number=rand()%9;
+        number=rand()%9; // Generate a random number between 0-8
         if(spaces[number]==' '){
-            spaces[number]=computer;
+            spaces[number]=computer; // Place computer's move
             break;
         }
     }
+}
+
+// Function to check winner
+bool CheckWinner(char *spaces, char player, char computer){
+    return 0;
 }
