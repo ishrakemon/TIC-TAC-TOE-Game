@@ -6,6 +6,7 @@ void DrawBoard(char *spaces);
 void PlayerMove(char *spaces, char player);
 void ComputerMove(char *spaces, char computer);
 bool CheckWinner(char *spaces, char player, char computer);
+bool CheckTie(char *spaces);
 
 int main(){
     // Initialize board with empty spaces
@@ -22,6 +23,10 @@ int main(){
             running=false;
             break;
         }
+        else if(CheckTie(spaces)){
+            running=false;
+            break;
+        }
 
         ComputerMove(spaces, computer); // Function to call computer move
         DrawBoard(spaces); // Redraw board after computer makes a move
@@ -29,7 +34,12 @@ int main(){
             running=false;
             break;
         }
+        else if(CheckTie(spaces)){
+            running=false;
+            break;
+        }
     }
+    std::cout<<"\nThis Game is created by Ishrakuzzaman Emon\n"
 
     return 0;
 }
@@ -79,30 +89,46 @@ void ComputerMove(char *spaces, char computer){
 
 // Function to check winner
 bool CheckWinner(char *spaces, char player, char computer){
+    // Check for Row
     if(spaces[0]!=' ' && (spaces[0] == spaces[1] && spaces[1] == spaces[2])){
-        spaces[0]==player? std::cout<<"YOU wIN!\n" : std::cout<<"YOU LOSE!\n";
+        spaces[0]==player? std::cout<<"YOU WIN!\n" : std::cout<<"YOU LOSE!\n";
     } else if(spaces[3]!=' ' && (spaces[3] == spaces[4] && spaces[5] == spaces[6])){
-        spaces[3]==player? std::cout<<"YOU wIN!\n" : std::cout<<"YOU LOSE!\n";
+        spaces[3]==player? std::cout<<"YOU WIN!\n" : std::cout<<"YOU LOSE!\n";
     } else if(spaces[6]!=' ' && (spaces[6] == spaces[7] && spaces[7] == spaces[8])){
-        spaces[6]==player? std::cout<<"YOU wIN!\n" : std::cout<<"YOU LOSE!\n";
+        spaces[6]==player? std::cout<<"YOU WIN!\n" : std::cout<<"YOU LOSE!\n";
     }
 
+    // Check for Columns
     else if(spaces[0]!=' ' && (spaces[0] == spaces[3] && spaces[3] == spaces[6])){
-        spaces[0]==player? std::cout<<"YOU wIN!\n" : std::cout<<"YOU LOSE!\n";
+        spaces[0]==player? std::cout<<"YOU WIN!\n" : std::cout<<"YOU LOSE!\n";
     } else if(spaces[1]!=' ' && (spaces[1] == spaces[4] && spaces[4] == spaces[7])){
-        spaces[1]==player? std::cout<<"YOU wIN!\n" : std::cout<<"YOU LOSE!\n";
+        spaces[1]==player? std::cout<<"YOU WIN!\n" : std::cout<<"YOU LOSE!\n";
     } else if(spaces[2]!=' ' && (spaces[2] == spaces[5] && spaces[5] == spaces[8])){
-        spaces[2]==player? std::cout<<"YOU wIN!\n" : std::cout<<"YOU LOSE!\n";
+        spaces[2]==player? std::cout<<"YOU WIN!\n" : std::cout<<"YOU LOSE!\n";
     }
 
+    // Check for Diagonals
     else if(spaces[0]!=' ' && (spaces[0] == spaces[4] && spaces[4] == spaces[8])){
-        spaces[0]==player? std::cout<<"YOU wIN!\n" : std::cout<<"YOU LOSE!\n";
+        spaces[0]==player? std::cout<<"YOU WIN!\n" : std::cout<<"YOU LOSE!\n";
     }
 
     else if(spaces[2]!=' ' && (spaces[2] == spaces[4] && spaces[4] == spaces[6])){
-        spaces[2]==player? std::cout<<"YOU wIN!\n" : std::cout<<"YOU LOSE!\n";
-    } else{
+        spaces[2]==player? std::cout<<"YOU WIN!\n" : std::cout<<"YOU LOSE!\n";
+    } 
+    
+    else{
         return false;
     }
+    return true; // Player has won
+}
+
+// Function to check Tie
+bool CheckTie(char *spaces){
+    for(int i=0; i<9; i++){
+        if(spaces[i] == ' '){
+            return false;
+        }
+    }
+    std::cout<<"IT'S A TIE!\n";
     return true;
 }
